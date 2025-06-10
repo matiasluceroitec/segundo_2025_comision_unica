@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %} City List {% endblock %}
+
+{% block body %} 
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">
+            Cities
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-5">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Action</th>
+            </tr>
+            {% for city in cities %}
+                <tr>
+                    <td>{{ city.name }}</td>
+                    <td>{{ city.lat }}</td>
+                    <td>{{ city.long }}</td>
+                    <td><div class="btn btn-info">Detail</div></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-5">
+        <div class="row text-center">
+            <h3>Add City</h3>
+        </div>
+        <div class="row">
+            {% with messages = get_flashed_messages(with_categories=true) %} <!-- Return message, category -->
+                {% if messages %}
+                    {% for category, message in messages%}
+                        <strong> {{ category.title() }}</strong> {{ message }}
+                    {% endfor %}
+                {% endif%}
+            {% endwith %}
+            <div class="col">
+                <form method="post" action="">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name">
+                    <label for="lat">Latitude</label>
+                    <input type="text" class="form-control" name="lat">
+                    <label for="long">Longtitude</label>
+                    <input type="text" class="form-control" name="long">
+
+                    <button class="btn btn-success mt-4" type="submit">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+{% endblock %}
