@@ -6,6 +6,11 @@ class City(db.Model):
     name = db.Column(db.String(100), nullable=False, unique=True)
     lat = db.Column(db.Float, nullable=False)
     long = db.Column(db.Float, nullable=False)
+    climates = db.relationship(
+        'Climate', 
+        backref='city', 
+        lazy=True,
+    )
 
     def __str__(self):
         return self.name
