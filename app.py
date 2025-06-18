@@ -42,7 +42,11 @@ def city():
 
 @app.route('/city/<int:city_id>', methods=['GET'])
 def city_detail(city_id):
-    return render_template('city_detail.html')
+    city_get = City.query.get_or_404(city_id)
+    return render_template(
+        'city_detail.html',
+        city=city_get
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
