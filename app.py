@@ -1,3 +1,6 @@
+import requests
+from datetime import datetime
+
 from flask import (
     Flask, 
     flash, 
@@ -60,6 +63,16 @@ def city_detail(city_id):
 def get_current_climate(city_id):
     city = City.query.get_or_404(city_id)
     API_URL_BASE = f'https://api.open-meteo.com/v1/forecast?latitude={city.lat}&longitude={city.long}&timezone=auto&current_weather=true'
+    response = requests.get(API_URL_BASE).json()
+    current_climate = Climate(
+        temperature=response['current_weather']['temperature'],
+        date=datetime.today(),
+        windspeed=response['current_weather']['windspeed'],
+        winddirection=response['current_weather']['winddirection'],
+        ciudad_id=city_id
+    )
+    db.session.add(current_climate)
+    db.session.commit()
     return redirect(url_for('city_detail', city_id=city_id))
 
 
