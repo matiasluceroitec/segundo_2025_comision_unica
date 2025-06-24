@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %} City Detail {% endblock %}
+
+{% block body %} 
+<a href="/city" class="btn btn-info"> Back </a>
+  <h1>{{ city.name }} City Detail </h1>
+  <h4>Latitude: {{city.lat}}</h4>
+  <h4>Longitude: {{city.long}}</h4>
+
+  <h4>Climas</h4>
+  <ul>
+    {% if city.climates|length > 0%}
+      {% for climate in city.climates %}
+        <li>{{climate}}</li>      
+      {% endfor %}
+    </ul>
+    {% else %}
+        <strong> Aun no hay datos de clima para dicha ciudad </strong>
+    {% endif %}
+    
+{% endblock %}

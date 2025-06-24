@@ -40,5 +40,17 @@ def city():
         cities=cities_list # nombre en html = nombre en back
     )
 
+
+@app.route('/city/<int:city_id>')
+def city_detail(city_id):
+    city = City.query.get_or_404(city_id)
+    return render_template(
+        'city_detail.html', 
+        city=city, 
+    )
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
