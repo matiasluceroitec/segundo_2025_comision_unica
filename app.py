@@ -58,7 +58,8 @@ def city_detail(city_id):
 
 @app.route('/city/<int:city_id>/get_current_climate')
 def get_current_climate(city_id):
-    print("LLEGO ACA Y SE FUE")
+    city = City.query.get_or_404(city_id)
+    API_URL_BASE = f'https://api.open-meteo.com/v1/forecast?latitude={city.lat}&longitude={city.long}&timezone=auto&current_weather=true'
     return redirect(url_for('city_detail', city_id=city_id))
 
 
