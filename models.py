@@ -19,6 +19,8 @@ class City(db.Model):
 class Climate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     temperature = db.Column(db.Float, nullable=False)
+    windspeed = db.Column(db.Float, nullable=True)
+    winddirection = db.Column(db.String(100), nullable=True)
     date = db.Column(db.DateTime, nullable=False)
     ciudad_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
 

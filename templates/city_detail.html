@@ -3,20 +3,44 @@
 {% block title %} City Detail {% endblock %}
 
 {% block body %} 
-<a href="/city" class="btn btn-info"> Back </a>
+<div class="row">
+  <div class="col">
+    <a href="/city" class="btn btn-info"> Back </a>
   <h1>{{ city.name }} City Detail </h1>
   <h4>Latitude: {{city.lat}}</h4>
   <h4>Longitude: {{city.long}}</h4>
 
   <h4>Climas</h4>
-  <ul>
+  <table class="table table-default">
+    <tr>
+      <th>Date</th>
+      <th>Temperature</th>
+      <th>Wind Speed</th>
+      <th>Wind Direction </th>
+    </tr>
     {% if city.climates|length > 0%}
       {% for climate in city.climates %}
-        <li>{{climate}}</li>      
+        <tr>
+          <td>{{climate.date}}</td>
+          <td>{{climate.temperature}}</td>
+          <td>{{climate.windspeed}}</td>
+          <td>{{climate.winddirection}}</td>
+        </tr>      
       {% endfor %}
     </ul>
     {% else %}
         <strong> Aun no hay datos de clima para dicha ciudad </strong>
     {% endif %}
+  </table>
     
+    
+  </div>
+  <div class="col">
+    <a class="btn btn-info" href="/city/{{city.id}}/get_current_climate" > 
+      Current Climate 
+    </a>
+  </div>
+  <div class="col"></div>
+</div>
+
 {% endblock %}

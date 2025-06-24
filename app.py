@@ -1,4 +1,11 @@
-from flask import Flask, flash, render_template, request
+from flask import (
+    Flask, 
+    flash, 
+    render_template, 
+    request, 
+    redirect,
+    url_for
+)
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
@@ -48,6 +55,11 @@ def city_detail(city_id):
         'city_detail.html', 
         city=city, 
     )
+
+@app.route('/city/<int:city_id>/get_current_climate')
+def get_current_climate(city_id):
+    print("LLEGO ACA Y SE FUE")
+    return redirect(url_for('city_detail', city_id=city_id))
 
 
 
