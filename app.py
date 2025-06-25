@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, request
+from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
@@ -47,6 +47,17 @@ def city_detail(city_id):
     return render_template(
         'city_detail.html', 
         city=city, 
+    )
+
+@app.route('/city/<int:city_id>/get_current_climate')
+def get_current_climate(city_id):
+    city = City.query.get_or_404(city_id)
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={city.lat}&longitude={city.long}&timezone=auto&current_weather=true"
+    return redirect(
+        url_for(
+            'city_detail',
+            city_id=city_id
+        )
     )
 
 
