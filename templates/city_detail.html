@@ -31,7 +31,6 @@
                                     <th>Temperatura (°C)</th>
                                     <th>Viento (km/h)</th>
                                     <th>Dirección</th>
-                                    <th>Código</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,7 +40,6 @@
                                     <td>{{ "%.1f"|format(weather.temperature) }}</td>
                                     <td>{{ weather.windspeed }}</td>
                                     <td>{{ weather.winddirection }}°</td>
-                                    <td>{{ weather.weathercode }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
