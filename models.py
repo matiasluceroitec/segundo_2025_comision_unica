@@ -18,8 +18,10 @@ class City(db.Model):
 
 class Climate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    temperature = db.Column(db.Float, nullable=False)
+    temperature = db.Column(db.Float, nullable=True)
     date = db.Column(db.DateTime, nullable=False)
+    windspeed = db.Column(db.Float, nullable=True)
+    winddirection = db.Column(db.Float, nullable=True)
     ciudad_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
 
     def __str__(self) -> str:

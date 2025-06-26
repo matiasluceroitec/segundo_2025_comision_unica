@@ -1,22 +1,77 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 
-{% block title %} City Detail {% endblock %}
-
-{% block body %} 
-<a href="/city" class="btn btn-info"> Back </a>
-  <h1>{{ city.name }} City Detail </h1>
-  <h4>Latitude: {{city.lat}}</h4>
-  <h4>Longitude: {{city.long}}</h4>
-
-  <h4>Climas</h4>
-  <ul>
-    {% if city.climates|length > 0%}
-      {% for climate in city.climates %}
-        <li>{{climate}}</li>      
-      {% endfor %}
-    </ul>
-    {% else %}
-        <strong> Aun no hay datos de clima para dicha ciudad </strong>
-    {% endif %}
-    
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="h4 mb-0">{{ city.name }}</h2>
+                        <a href="/city/{{city.id}}/get_current_climate" class="btn btn-light btn-sm">
+                            <i class="fas fa-sync-alt"></i> Actualizar clima
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Latitud:</strong> {{ city.lat }}</p>
+                            <p><strong>Longitud:</strong> {{ city.long }}</p>
+                        </div>
+                        {% if city.climates|length > 0 %}
+                        <div class="col-md-6">
+                            <div class="weather-current">
+                                <h3 class="h5">Ultimo Registro</h3>
+                                <p class="display-4">{{ "%.1f"|format(latest_weather.temperature) }}°C</p>
+                                {% if latest_weather.windspeed %}
+                                <p>
+                                    <i class="fas fa-wind"></i> Viento: {{ latest_weather.windspeed }} km/h<br>
+                                    <i class="fas fa-compass"></i> Dirección: {{ latest_weather.winddirection }}°<br>
+                                </p>
+                                {% endif %}
+                                <p class="text-muted small">Actualizado: {{ latest_weather.date.strftime('%d/%m/%Y %H:%M') }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <h4 class="h5 mb-3">Historial de Clima</h4>
+                    {% if city.climates|length > 0 %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Fecha y Hora</th>
+                                    <th>Temperatura (°C)</th>
+                                    <th>Viento (km/h)</th>
+                                    <th>Dirección</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for weather in city.climates|sort(attribute='date', reverse=true) %}
+                                <tr>
+                                    <td>{{ weather.date.strftime('%d/%m/%Y %H:%M') }}</td>
+                                    <td>{{ "%.1f"|format(weather.temperature) }}</td>
+                                    <td>{{ weather.windspeed }}</td>
+                                    <td>{{ weather.winddirection }}°</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        No hay datos climáticos disponibles. Haz clic en "Actualizar clima" para obtener la información más reciente.
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('city') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver al listado
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
