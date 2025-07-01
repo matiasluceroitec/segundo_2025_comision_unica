@@ -21,6 +21,8 @@ class Climate(db.Model):
     temperature = db.Column(db.Float, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
     ciudad_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
+    windspeed = db.Column(db.Float, nullable=True)
+    winddirection = db.Column(db.Float, nullable=True)
 
     def __str__(self) -> str:
         return f"{self.date} {self.ciudad_id} {self.temperature}"
