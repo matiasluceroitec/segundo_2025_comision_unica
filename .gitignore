@@ -1,3 +1,5 @@
 .environment
 /.environment
 *.pyc
+migrations
+/migrations

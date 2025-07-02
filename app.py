@@ -4,24 +4,54 @@ from datetime import datetime
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import (
+    current_user,
+    LoginManager,
+    login_required,
+    login_user,
+    logout_user,
+)
+from werkzeug.security import (
+    generate_password_hash, 
+    check_password_hash
+)
 
 app = Flask(__name__)
 
 app.secret_key = "cualquiercosa"
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    "mysql+pymysql://root:@localhost/segundo_unificado"
+    "mysql+pymysql://root:@localhost/segundo-com-b"
 )
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+from models import City, Climate, User
 
-from models import City, Climate
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @app.route('/')
 def index():
     return render_template(
         'index.html'
+    )
+
+@app.route('/login')
+def login():
+    return render_template(
+        'auth/login.html'
+    )
+
+@app.route('/register')
+def register():
+    return render_template(
+        'auth/register.html'
     )
 
 @app.route('/city', methods=['POST', 'GET'])

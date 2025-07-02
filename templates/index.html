@@ -1,7 +1,20 @@
 {% extends 'layout.html' %}
 
-{% block title %} Inicio {% endblock %}
+{% block head_title %}Inicio{% endblock %}
 
-{% block body %} 
-  <h1>Contenido del body</h1>
+{% block content %}
+<div class="text-center py-5">
+    {% if current_user.is_authenticated %}
+        <h1 class="display-4">¡Bienvenido, {{ current_user.username }}!</h1>
+        <p class="lead">Has iniciado sesión correctamente en la Aplicación del Clima.</p>
+        <a href="{{ url_for('city') }}" class="btn btn-primary btn-lg mt-3">Ver Ciudades</a>
+    {% else %}
+        <h1 class="display-4">Bienvenido a la Aplicación del Clima</h1>
+        <p class="lead">Por favor inicia sesión o regístrate para acceder a todas las funcionalidades.</p>
+        <div class="mt-4">
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg mr-3">Iniciar Sesión</a>
+            <a href="{{ url_for('register') }}" class="btn btn-outline-primary btn-lg">Registrarse</a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
