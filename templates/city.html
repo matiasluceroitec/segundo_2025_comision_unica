@@ -41,20 +41,25 @@
                     {% endfor %}
                 {% endif%}
             {% endwith %}
-            <div class="col">
-                <form method="post" action="">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name">
-                    <label for="lat">Latitude</label>
-                    <input type="text" class="form-control" name="lat">
-                    <label for="long">Longtitude</label>
-                    <input type="text" class="form-control" name="long">
 
-                    <button class="btn btn-success mt-4" type="submit">
-                        Save
-                    </button>
-                </form>
-            </div>
+            {% if current_user.is_authenticated %}
+                <div class="col">
+                    <form method="post" action="">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name">
+                        <label for="lat">Latitude</label>
+                        <input type="text" class="form-control" name="lat">
+                        <label for="long">Longtitude</label>
+                        <input type="text" class="form-control" name="long">
+
+                        <button class="btn btn-success mt-4" type="submit">
+                            Save
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <p><strong>Inicie sesion para agregar una ciudad</strong></p>
+            {% endif %}
         </div>
     </div>
 </div>
